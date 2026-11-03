@@ -1,0 +1,50 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: p2b
+      POSTGRES_USER: p2b
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Tentukan DB_PASSWORD di .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U p2b -d p2b"]
+      interval: 10s
+      retries: 10
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_ENV: production
+      APP_SECRET: ${APP_SECRET:?Tentukan APP_SECRET di .env}
+      DATABASE_URL: postgresql+psycopg://p2b:${DB_PASSWORD}@db:5432/p2b
+      BOOTSTRAP_ADMIN_USERNAME: ${BOOTSTRAP_ADMIN_USERNAME:?Tentukan username admin}
+      BOOTSTRAP_ADMIN_PASSWORD: ${BOOTSTRAP_ADMIN_PASSWORD:?Tentukan password admin}
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/srv/app
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      P2B_DOMAIN: ${P2B_DOMAIN:?Tentukan nama domain}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - app
+volumes:
+  postgres_data:
+  caddy_data:
+  caddy_config:

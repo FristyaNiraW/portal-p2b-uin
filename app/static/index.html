@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P2B • UIN Maulana Malik Ibrahim Malang | Portal Terintegrasi</title>
+  <meta name="description" content="Aplikasi Web Dinamis Pusat Pengembangan Bisnis (P2B) UIN Maulana Malik Ibrahim Malang: Beranda, 6 Divisi Layanan, Info & Berita, Kerja Sama PKS, dan Kontak.">
+  <meta name="theme-color" content="#064036">
+  
+  <link rel="icon" type="image/x-icon" href="/static/favicon-uin.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/emblem-uin-32x32.png">
+  <link rel="apple-touch-icon" href="/static/emblem-uin.png">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+  <!-- Utility Bar Universitas -->
+  <div class="utility">
+    <div class="utility-left">
+      <span class="live-dot" aria-hidden="true"></span>
+      <span class="univ-title">UNIVERSITAS ISLAM NEGERI MAULANA MALIK IBRAHIM MALANG</span>
+      <span class="utility-sep" aria-hidden="true">•</span>
+      <span class="blu-chip">BADAN LAYANAN UMUM (BLU) PTKIN</span>
+    </div>
+    <div class="utility-right">
+      <a href="https://uin-malang.ac.id" target="_blank" rel="noopener" class="univ-link">
+        <span>Website UIN Malang</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Header & Navigasi Terpadu -->
+  <header class="topbar">
+    <div class="topinner">
+      <a class="brand" href="#beranda" data-nav="beranda">
+        <img src="/static/emblem-uin.png" alt="Logo Resmi UIN Malang" class="header-logo-img" width="46" height="46">
+        <div class="logo-divider" aria-hidden="true"></div>
+        <div class="brand-titles">
+          <strong>Pusat Pengembangan Bisnis</strong>
+          <small>UIN MAULANA MALIK IBRAHIM MALANG</small>
+        </div>
+        <img src="/static/logo-p2b-transparent.png" alt="Logo P2B UIN Maliki Malang" style="height:52px; width:auto; margin-left:8px; object-fit:contain;">
+      </a>
+
+      <button class="mobilemenu" id="menuToggle" aria-label="Buka navigasi">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="menu-label">Menu</span>
+      </button>
+
+           <nav class="mainnav" id="publicNav">
+        <button class="navbtn active" data-go="beranda">Beranda</button>
+        <button class="navbtn" data-go="divisi">Divisi</button>
+        <button class="navbtn" data-go="marketplace">Marketplace</button>
+        <button class="navbtn" data-go="berita">Info &amp; Berita</button>
+        <button class="navbtn" data-go="kerjasama">Kerja Sama</button>
+        <button class="navbtn" data-go="kontak">Kontak</button>
+        <button class="adminbtn" id="accessBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <span>◈ Dashboard Kepala P2B</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Container Konten Dinamis Halaman Publik -->
+  <main id="publicSite">
+    <div id="view"></div>
+  </main>
+
+  <!-- Workspace Aplikasi Kontrol Internal P2B (Aktif saat Login) -->
+  <section id="internalApp" hidden>
+    <div class="appLayout">
+      <aside class="sidebar">
+        <div class="sidebrand">
+          <div class="sidebrand-header">
+            <img src="/static/emblem-uin.png" alt="Logo UIN Malang" class="side-logo-img" width="36" height="36">
+            <div class="sidebrand-text">
+              <strong>P2B CONTROL CENTER</strong>
+              <small>UIN Maulana Malik Ibrahim Malang</small>
+            </div>
+          </div>
+          <div class="sidebrand-badge">SISTEM INTEGRASI PUSAT</div>
+        </div>
+
+        <div id="identity" class="identity-card"></div>
+
+        <div class="side-nav-heading">MODUL SISTEM OPERASIONAL</div>
+        <div id="sideLinks" class="sidelinks-container"></div>
+
+        <button class="sideout" id="logoutBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span>Keluar Sesi (Logout)</span>
+        </button>
+      </aside>
+
+      <div class="workspace">
+        <div class="worktop">
+          <div class="worktop-titles">
+            <small id="workHint">Sistem terpusat • Sinkronisasi otomatis</small>
+            <h2 id="workTitle">Dashboard P2B</h2>
+          </div>
+          <div class="actions worktop-actions">
+            <span id="syncState" class="sync-badge">
+              <span class="sync-pulse"></span>
+              <span class="sync-text">● Online</span>
+            </span>
+            <button class="ghost" id="reloadBtn" title="Segarkan Data Sekarang">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+              <span>Segarkan</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="workBody" class="work-content"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Universitas & Lembaga -->
+  <footer class="foot">
+    <div class="footinner">
+      <div class="footbrand">
+        <div class="footlogo">
+          <img src="/static/emblem-uin.png" alt="Logo UIN Malang" width="46" height="46">
+          <div>
+            <strong>Pusat Pengembangan Bisnis (P2B)</strong>
+            <span>UIN Maulana Malik Ibrahim Malang</span>
+          </div>
+        </div>
+        <p>Mengintegrasikan layanan, aset, kemitraan, inovasi, dan profesionalisme untuk mendukung kemandirian Badan Layanan Umum (BLU) universitas.</p>
+        <small>© 2026 P2B • UIN Maulana Malik Ibrahim Malang. Seluruh hak cipta dilindungi.</small>
+      </div>
+      <div class="footerlinks">
+        <a href="https://uin-malang.ac.id/" target="_blank" rel="noopener">Website Utama UIN Malang ↗</a>
+        <a href="#beranda" data-nav="beranda">Beranda</a>
+        <a href="#divisi" data-nav="divisi">Enam Divisi</a>
+        <a href="#kerjasama" data-nav="kerjasama">Kerja Sama &amp; PKS</a>
+        <a href="#kontak" data-nav="kontak">Kontak</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Login Pengguna Internal -->
+  <div id="authOverlay" class="overlay" hidden>
+    <div class="modal small">
+      <button class="x" id="closeAuth" aria-label="Tutup jendela login">×</button>
+      <div class="modal-brand">
+        <img src="/static/emblem-uin.png" alt="Logo UIN Malang" width="54" height="54" class="modal-brand-logo">
+        <div class="modal-brand-info">
+          <span class="modal-p2b-tag">P2B UIN MALANG</span>
+          <h2>Login Portal Internal</h2>
+        </div>
+      </div>
+      <p class="subtle">Gunakan akun staf/pejabat yang diterbitkan oleh administrator Pusat Pengembangan Bisnis UIN Malang.</p>
+      
+      <form id="loginForm">
+        <label>
+          <span class="input-label-text">Username</span>
+          <input name="username" required autocomplete="username" placeholder="contoh: kepala.p2b">
+        </label>
+        <label>
+          <span class="input-label-text">Password</span>
+          <input name="password" type="password" required autocomplete="current-password" placeholder="••••••••••••">
+        </label>
+        <button class="btn full" style="margin-top:12px;">
+          <span>Masuk ke Dashboard</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </form>
+      <p class="error" id="authError"></p>
+    </div>
+  </div>
+
+  <!-- Modal Edit / Tambah Data Modul Internal -->
+  <div id="editOverlay" class="overlay" hidden>
+    <div class="modal">
+      <button class="x" id="closeEdit" aria-label="Tutup jendela editor">×</button>
+      <div class="modal-header-edit">
+        <span class="edit-modal-badge">FORMULIR OPERASIONAL P2B</span>
+        <h2 id="editTitle">Tambah Data</h2>
+      </div>
+      <form id="editForm">
+        <div class="formgrid" id="editFields"></div>
+        <div class="actions form-actions">
+          <button type="button" class="ghost" id="cancelEdit">Batal</button>
+          <button class="btn">
+            <span>Simpan Data</span>
+          </button>
+        </div>
+      </form>
+      <p id="editError" class="error"></p>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Script Logika Aplikasi -->
+  <script src="/static/app.js"></script>
+</body>
+</html>

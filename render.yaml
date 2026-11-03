@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: portal-p2b-uin-malang
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: APP_SECRET
+        generateValue: true
+      - key: BOOTSTRAP_ADMIN_USERNAME
+        value: kepala.p2b
+      - key: BOOTSTRAP_ADMIN_PASSWORD
+        value: AdminP2B#2026!UIN
