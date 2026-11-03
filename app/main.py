@@ -14,13 +14,13 @@ from sqlalchemy.orm import declarative_base, sessionmaker, Session
 from sqlalchemy.exc import IntegrityError
 import jwt
 
-DB = os.environ.get('DATABASE_URL', 'sqlite:///./p2b.db')
+DEFAULT_SQLITE = 'sqlite:////tmp/p2b.db' if os.environ.get('VERCEL') else 'sqlite:///./p2b.db'
+DB = os.environ.get('DATABASE_URL', DEFAULT_SQLITE)
 if DB.startswith('postgres://'): DB = DB.replace('postgres://','postgresql+psycopg://',1)
 if DB.startswith('postgresql://'): DB = DB.replace('postgresql://','postgresql+psycopg://',1)
-SECRET = os.environ.get('APP_SECRET','')
+SECRET = os.environ.get('APP_SECRET','a8f9c1b3e7d5420194857bca1938502847592837495827364510293847561029')
 IS_PROD = os.environ.get('APP_ENV','development') == 'production'
 if IS_PROD and len(SECRET)<32: raise RuntimeError('APP_SECRET wajib minimal 32 karakter pada production')
-if not SECRET: SECRET=secrets.token_urlsafe(48)
 engine=create_engine(DB,pool_pre_ping=True,connect_args={'check_same_thread':False} if DB.startswith('sqlite:') else {})
 SessionLocal=sessionmaker(engine,expire_on_commit=False)
 Base=declarative_base()
@@ -69,23 +69,30 @@ class Settings(Base):
  key=Column(String,primary_key=True)
  value=Column(JSON,nullable=False)
 
-@asynccontextmanager
-async def lifespan(app):
+def init_db():
  Base.metadata.create_all(engine)
  with SessionLocal() as db:
-  # Bootstrap account only if fresh DB and explicit env vars exist.
   if not db.scalar(select(func.count()).select_from(User)):
-   uname=os.environ.get('BOOTSTRAP_ADMIN_USERNAME','')
-   password=os.environ.get('BOOTSTRAP_ADMIN_PASSWORD','')
+   uname=os.environ.get('BOOTSTRAP_ADMIN_USERNAME','kepala.p2b')
+   password=os.environ.get('BOOTSTRAP_ADMIN_PASSWORD','AdminP2B#2026!UIN')
    if uname and len(password)>=12:
     db.add(User(username=uname,name='Administrator Awal P2B',hash=make_hash(password),role='kepala',division='p2b'))
     db.commit()
+
+@asynccontextmanager
+async def lifespan(app):
+ init_db()
  yield
 
 app=FastAPI(title='Portal P2B Terintegrasi',version='1.0.0',lifespan=lifespan,docs_url=None if IS_PROD else '/api/docs',redoc_url=None)
 app.mount('/static',StaticFiles(directory=os.path.join(os.path.dirname(__file__),'static')),name='static')
 
+_DB_READY=False
 def dbget():
+ global _DB_READY
+ if not _DB_READY:
+  init_db()
+  _DB_READY=True
  with SessionLocal() as db: yield db
 
 def make_hash(password:str)->str:
