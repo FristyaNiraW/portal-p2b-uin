@@ -25,12 +25,12 @@ let publicNewsList = [];
    DATA MASTER DARI KAJIAN DOKUMEN & LIBRARY P2B
    ========================================================================== */
 const modules = [
-  ['komersial', 'Komersial & Aset', '🏛️', 'Pemanfaatan aset universitas, rumah singgah, laundry, kantin, persewaan serta kemitraan komersial.'],
-  ['klinik', 'Klinik Pratama', '✚', 'Pelayanan medis primer dokter umum dan gigi, BPJS Kesehatan, MCU civitas, dan homecare.'],
-  ['press', 'UIN Maliki Press', '▤', 'Penerbitan buku referensi, monograf, buku ajar, e-book, pencetakan, hak cipta (HKI) dan royalti.'],
-  ['diklat', 'Pendidikan & Pelatihan', '🎓', 'Daycare ramah anak, Labschool PAUD, pelatihan profesi, kursus bahasa dan sertifikasi kompetensi BNSP.'],
-  ['lph', 'Lembaga Pemeriksa Halal', '◈', 'Jasa pemeriksaan teknis, audit kehalalan produk pangan, obat, dan kosmetik berstandar BPJPH.'],
-  ['halal', 'Halal Center', '✧', 'Pelatihan penyelia halal, pendampingan sertifikasi halal UMKM, edukasi dan inkubasi halal kampus.']
+  ['komersial', 'Komersial & Aset', '01', 'Pemanfaatan aset universitas, rumah singgah, laundry, kantin, persewaan serta kemitraan komersial.'],
+  ['klinik', 'Klinik Pratama', '02', 'Pelayanan medis primer dokter umum dan gigi, BPJS Kesehatan, MCU civitas, dan homecare.'],
+  ['press', 'UIN Maliki Press', '03', 'Penerbitan buku referensi, monograf, buku ajar, e-book, pencetakan, hak cipta (HKI) dan royalti.'],
+  ['diklat', 'Pendidikan & Pelatihan', '04', 'Daycare ramah anak, Labschool PAUD, pelatihan profesi, kursus bahasa dan sertifikasi kompetensi BNSP.'],
+  ['lph', 'Lembaga Pemeriksa Halal', '05', 'Jasa pemeriksaan teknis, audit kehalalan produk pangan, obat, dan kosmetik berstandar BPJPH.'],
+  ['halal', 'Halal Center', '06', 'Pelatihan penyelia halal, pendampingan sertifikasi halal UMKM, edukasi dan inkubasi halal kampus.']
 ];
 
 const people = [
@@ -478,7 +478,7 @@ function homeTab() {
         ${roadmap.map(x => `
           <div class="card ${x[0] === '2026' ? 'active-year' : ''}">
             <h3>${esc(x[0])}</h3>
-            <strong>${esc(x[1])} ${x[0] === '2026' ? '★ (Tahun Ini)' : ''}</strong>
+            <strong>${esc(x[1])} ${x[0] === '2026' ? '(Tahun Berjalan)' : ''}</strong>
             <p>${esc(x[2])}</p>
           </div>
         `).join('')}
@@ -598,30 +598,30 @@ const merchandiseList = [
 ];
 
 const marketplaceTabs = [
-  ['belanja', '🛍️ Belanja', 'Mart & Merchandise Resmi Kampus'],
-  ['rumah_singgah', '🏨 Pesan Rumah Singgah', 'Reservasi Kamar Tamu & Penginapan'],
-  ['sewa_ruang', '🏢 Sewa Ruang', 'Hall Pertemuan, Ruang Rapat & Kelas'],
-  ['sewa_gedung', '🏛️ Sewa Gedung & Lahan', 'Gedung Serbaguna, Aula & Area Terbuka']
+  ['belanja', 'Belanja', 'Mart & Merchandise Resmi Kampus'],
+  ['rumah_singgah', 'Pesan Rumah Singgah', 'Reservasi Kamar Tamu & Penginapan'],
+  ['sewa_ruang', 'Sewa Ruang', 'Hall Pertemuan, Ruang Rapat & Kelas'],
+  ['sewa_gedung', 'Sewa Gedung & Lahan', 'Gedung Serbaguna, Aula & Area Terbuka']
 ];
 
 const rumahSinggahList = [
-  ['Kamar Tamu Reguler (K01 – K08)', 250000, 'per malam', 'Kamar nyaman untuk tamu akademik, wali mahasiswa, dan umum. Tersedia 8 unit kamar terstandarisasi.', ['AC & TV LED', 'Kamar Mandi Dalam (Water Heater)', 'Wi-Fi Kampus Cepat', '2 Tempat Tidur / Twin Bed', 'Air Mineral & Perlengkapan Mandi'], '🏨'],
-  ['Kamar Tamu VIP / Family (K09 – K12)', 350000, 'per malam', 'Kamar lebih luas dengan fasilitas ekstra untuk tamu kehormatan, narasumber, atau keluarga civitas.', ['AC, Smart TV & Meja Kerja', 'Kamar Mandi Dalam + Water Heater', 'Double / King Bed Nyaman', 'Area Duduk & Sofa Tamu', 'Layanan Kebersihan Harian'], '🛌'],
-  ['Paket Menginap Rombongan / Kegiatan', 225000, 'per kamar / malam (min. 5 kamar)', 'Harga khusus untuk rombongan studi banding, peserta konferensi, atau kegiatan resmi fakultas/lembaga.', ['Akses Parkir Bus & Kendaraan Luas', 'Dekat Masjid & Kantin Kampus', 'Opsi Tambahan Konsumsi / Catering', 'Check-in Fleksibel Sesuai Jadwal'], '👥']
+  ['Kamar Tamu Reguler (K01 – K08)', 250000, 'per malam', 'Kamar nyaman untuk tamu akademik, wali mahasiswa, dan umum. Tersedia 8 unit kamar terstandarisasi.', ['AC & TV LED', 'Kamar Mandi Dalam (Water Heater)', 'Wi-Fi Kampus Cepat', '2 Tempat Tidur / Twin Bed', 'Air Mineral & Perlengkapan Mandi']],
+  ['Kamar Tamu VIP / Family (K09 – K12)', 350000, 'per malam', 'Kamar lebih luas dengan fasilitas ekstra untuk tamu kehormatan, narasumber, atau keluarga civitas.', ['AC, Smart TV & Meja Kerja', 'Kamar Mandi Dalam + Water Heater', 'Double / King Bed Nyaman', 'Area Duduk & Sofa Tamu', 'Layanan Kebersihan Harian']],
+  ['Paket Menginap Rombongan / Kegiatan', 225000, 'per kamar / malam (min. 5 kamar)', 'Harga khusus untuk rombongan studi banding, peserta konferensi, atau kegiatan resmi fakultas/lembaga.', ['Akses Parkir Bus & Kendaraan Luas', 'Dekat Masjid & Kantin Kampus', 'Opsi Tambahan Konsumsi / Catering', 'Check-in Fleksibel Sesuai Jadwal']]
 ];
 
 const sewaRuangList = [
-  ['Hall Besar Lt. 4 (Kode: HB4)', 1500000, 'per sesi / hari', 'Ruang pertemuan representatif berkapasitas besar untuk seminar, workshop, rapat kerja, dan pelatihan.', 'Kapasitas ±150–200 Orang', ['Full AC Sentral', 'Sound System & Wireless Mic', 'Proyektor LCD / Layar Lebar', 'Kursi & Meja Konferensi', 'Akses Lift & Lobby'], '🏢'],
-  ['Hall Kecil A Lt. 3 (Kode: HK3A)', 750000, 'per sesi / hari', 'Ruang rapat menengah yang ideal untuk diskusi panel, FGD, ujian terbuka, atau bimbingan teknis.', 'Kapasitas ±50–75 Orang', ['AC & Tata Suara Standar', 'Smart TV / Proyektor', 'Papan Tulis / Flipchart', 'Wi-Fi Dedicated', 'Meja & Kursi Modular'], '📋'],
-  ['Hall Kecil B Lt. 3 (Kode: HK3B)', 750000, 'per sesi / hari', 'Ruang pertemuan nyaman untuk rapat koordinasi mitra, pelatihan singkat, dan kegiatan organisasi.', 'Kapasitas ±50–75 Orang', ['AC & Sound System', 'Proyektor & Layar', 'Konfigurasi Kursi Fleksibel', 'Koneksi Internet Cepat', 'Area Transit Tamu'], '💼'],
-  ['Ruang Kelas & Pelatihan Profesi', 450000, 'per sesi / hari', 'Ruang kelas berstandar akademik untuk kursus bahasa, sertifikasi kompetensi BNSP, dan bimbel.', 'Kapasitas ±30–40 Orang', ['AC & Pencahayaan Optimal', 'LCD Proyektor & Whiteboard', 'Kursi Kuliah / Meja Lipat', 'Lingkungan Kondusif'], '🎓']
+  ['Hall Besar Lt. 4 (Kode: HB4)', 1500000, 'per sesi / hari', 'Ruang pertemuan representatif berkapasitas besar untuk seminar, workshop, rapat kerja, dan pelatihan.', 'Kapasitas ±150–200 Orang', ['Full AC Sentral', 'Sound System & Wireless Mic', 'Proyektor LCD / Layar Lebar', 'Kursi & Meja Konferensi', 'Akses Lift & Lobby']],
+  ['Hall Kecil A Lt. 3 (Kode: HK3A)', 750000, 'per sesi / hari', 'Ruang rapat menengah yang ideal untuk diskusi panel, FGD, ujian terbuka, atau bimbingan teknis.', 'Kapasitas ±50–75 Orang', ['AC & Tata Suara Standar', 'Smart TV / Proyektor', 'Papan Tulis / Flipchart', 'Wi-Fi Dedicated', 'Meja & Kursi Modular']],
+  ['Hall Kecil B Lt. 3 (Kode: HK3B)', 750000, 'per sesi / hari', 'Ruang pertemuan nyaman untuk rapat koordinasi mitra, pelatihan singkat, dan kegiatan organisasi.', 'Kapasitas ±50–75 Orang', ['AC & Sound System', 'Proyektor & Layar', 'Konfigurasi Kursi Fleksibel', 'Koneksi Internet Cepat', 'Area Transit Tamu']],
+  ['Ruang Kelas & Pelatihan Profesi', 450000, 'per sesi / hari', 'Ruang kelas berstandar akademik untuk kursus bahasa, sertifikasi kompetensi BNSP, dan bimbel.', 'Kapasitas ±30–40 Orang', ['AC & Pencahayaan Optimal', 'LCD Proyektor & Whiteboard', 'Kursi Kuliah / Meja Lipat', 'Lingkungan Kondusif']]
 ];
 
 const sewaGedungList = [
-  ['Gedung Serbaguna / Auditorium Kampus', 7500000, 'per hari', 'Gedung berkapasitas besar untuk acara wisuda, konferensi internasional, simposium, dan resepsi.', 'Kapasitas ±800–1.500 Orang', ['Panggung Utama & Backstage', 'Tata Suara & Lighting Profesional', 'Ruang VIP Transit', 'Area Parkir Luas & Keamanan', 'Dukungan Kebersihan & Teknisi'], '🏛️'],
-  ['Aula Sport Center & Gelanggang', 4500000, 'per hari', 'Fasilitas indoor serbaguna untuk turnamen olahraga, expo pendidikan, bursa kerja (job fair), dan gathering.', 'Kapasitas ±500–1.000 Orang', ['Tribun Penonton', 'Lapangan Indoor Standar', 'Ruang Ganti & Toilet Lengkap', 'Akses Loading Barang Mudah'], '🏟️'],
-  ['Lahan Terbuka & Area Bazar / Event', 1500000, 'per hari / zona', 'Area terbuka strategis di lingkungan kampus untuk pameran UMKM, bazar mahasiswa, dan festival.', 'Zona Strategis Kampus', ['Akses Listrik & Air', 'Titik Strategis Lalu Lintas Civitas', 'Izin Keramaian Internal Kampus', 'Opsi Sewa Tenda & Booth'], '⛺'],
-  ['Kios Komersial & Space Tenant Kampus', 12000000, 'per tahun / kontrak PKS', 'Penyewaan ruang usaha, gerai kantin, layanan perbankan/ATM, dan kemitraan ritel di Kampus 1, 2, & 3.', 'Mitra Usaha & UMKM', ['Kontrak Resmi PKS BLU', 'Pasar Aktif Ribuan Mahasiswa', 'Ekosistem Transaksi Cashless QRIS', 'Fasilitas Listrik & Keamanan 24 Jam'], '🏪']
+  ['Gedung Serbaguna / Auditorium Kampus', 7500000, 'per hari', 'Gedung berkapasitas besar untuk acara wisuda, konferensi internasional, simposium, dan resepsi.', 'Kapasitas ±800–1.500 Orang', ['Panggung Utama & Backstage', 'Tata Suara & Lighting Profesional', 'Ruang VIP Transit', 'Area Parkir Luas & Keamanan', 'Dukungan Kebersihan & Teknisi']],
+  ['Aula Sport Center & Gelanggang', 4500000, 'per hari', 'Fasilitas indoor serbaguna untuk turnamen olahraga, expo pendidikan, bursa kerja (job fair), dan gathering.', 'Kapasitas ±500–1.000 Orang', ['Tribun Penonton', 'Lapangan Indoor Standar', 'Ruang Ganti & Toilet Lengkap', 'Akses Loading Barang Mudah']],
+  ['Lahan Terbuka & Area Bazar / Event', 1500000, 'per hari / zona', 'Area terbuka strategis di lingkungan kampus untuk pameran UMKM, bazar mahasiswa, dan festival.', 'Zona Strategis Kampus', ['Akses Listrik & Air', 'Titik Strategis Lalu Lintas Civitas', 'Izin Keramaian Internal Kampus', 'Opsi Sewa Tenda & Booth']],
+  ['Kios Komersial & Space Tenant Kampus', 12000000, 'per tahun / kontrak PKS', 'Penyewaan ruang usaha, gerai kantin, layanan perbankan/ATM, dan kemitraan ritel di Kampus 1, 2, & 3.', 'Mitra Usaha & UMKM', ['Kontrak Resmi PKS BLU', 'Pasar Aktif Ribuan Mahasiswa', 'Ekosistem Transaksi Cashless QRIS', 'Fasilitas Listrik & Keamanan 24 Jam']]
 ];
 
 function commercialView() {
@@ -689,7 +689,7 @@ function marketplaceTabContent() {
     return `
       <div class="card market-banner">
         <div>
-          <span class="pill">🏨 Penginapan Resmi Kampus • 12 Kamar Tamu</span>
+          <span class="pill">Penginapan Resmi Kampus • 12 Kamar Tamu</span>
           <h3 style="font-size:22px; margin:8px 0 6px;">Pesan Rumah Singgah P2B UIN Malang</h3>
           <p style="margin:0;">Layanan penginapan bersih, nyaman, dan islami di lingkungan kampus bagi tamu universitas, wali mahasiswa, peserta kegiatan, dan masyarakat umum.</p>
         </div>
@@ -701,16 +701,15 @@ function marketplaceTabContent() {
       </div>
 
       <div class="grid three">
-        ${rumahSinggahList.map(([name, price, unit, desc,perks, icon]) => `
+        ${rumahSinggahList.map(([name, price, unit, desc, perks]) => `
           <div class="card rental-card">
             <div class="rental-head">
-              <span class="glyph">${icon}</span>
               <span class="pill">Tersedia Reservasi</span>
             </div>
             <h3>${esc(name)}</h3>
             <p>${esc(desc)}</p>
             <ul class="rental-perks">
-              ${perks.map(p => `<li>✓ ${esc(p)}</li>`).join('')}
+              ${perks.map(p => `<li>${esc(p)}</li>`).join('')}
             </ul>
             <div class="rental-foot">
               <div>
@@ -740,7 +739,7 @@ function marketplaceTabContent() {
     return `
       <div class="card market-banner">
         <div>
-          <span class="pill">🏢 Fasilitas Ruang Pertemuan &amp; Kelas</span>
+          <span class="pill">Fasilitas Ruang Pertemuan &amp; Kelas</span>
           <h3 style="font-size:22px; margin:8px 0 6px;">Sewa Ruang Pertemuan, Hall &amp; Kelas</h3>
           <p style="margin:0;">Solusi ruang rapat, hall seminar, ruang pelatihan, dan ujian dengan fasilitas penunjang lengkap di lingkungan UIN Maulana Malik Ibrahim Malang.</p>
         </div>
@@ -752,16 +751,15 @@ function marketplaceTabContent() {
       </div>
 
       <div class="grid two">
-        ${sewaRuangList.map(([name, price, unit, desc, cap, perks, icon]) => `
+        ${sewaRuangList.map(([name, price, unit, desc, cap, perks]) => `
           <div class="card rental-card">
             <div class="rental-head">
-              <span class="glyph">${icon}</span>
               <span class="pill">${esc(cap)}</span>
             </div>
             <h3>${esc(name)}</h3>
             <p>${esc(desc)}</p>
             <ul class="rental-perks">
-              ${perks.map(p => `<li>✓ ${esc(p)}</li>`).join('')}
+              ${perks.map(p => `<li>${esc(p)}</li>`).join('')}
             </ul>
             <div class="rental-foot">
               <div>
@@ -790,7 +788,7 @@ function marketplaceTabContent() {
     return `
       <div class="card market-banner">
         <div>
-          <span class="pill">🏛️ Optimalisasi Aset Gedung &amp; Lahan BLU</span>
+          <span class="pill">Optimalisasi Aset Gedung &amp; Lahan BLU</span>
           <h3 style="font-size:22px; margin:8px 0 6px;">Sewa Gedung Serbaguna, Aula &amp; Lahan Kampus</h3>
           <p style="margin:0;">Penyewaan fasilitas gedung kapasitas besar, gelanggang olahraga, area pameran/bazar terbuka, hingga ruang usaha tenant dan kemitraan komersial.</p>
         </div>
@@ -802,16 +800,15 @@ function marketplaceTabContent() {
       </div>
 
       <div class="grid two">
-        ${sewaGedungList.map(([name, price, unit, desc, cap, perks, icon]) => `
+        ${sewaGedungList.map(([name, price, unit, desc, cap, perks]) => `
           <div class="card rental-card">
             <div class="rental-head">
-              <span class="glyph">${icon}</span>
               <span class="pill">${esc(cap)}</span>
             </div>
             <h3>${esc(name)}</h3>
             <p>${esc(desc)}</p>
             <ul class="rental-perks">
-              ${perks.map(p => `<li>✓ ${esc(p)}</li>`).join('')}
+              ${perks.map(p => `<li>${esc(p)}</li>`).join('')}
             </ul>
             <div class="rental-foot">
               <div>
@@ -840,7 +837,7 @@ function marketplaceTabContent() {
   return `
     <div class="card market-banner">
       <div>
-        <span class="pill">🛍️ Mart &amp; Merchandise Resmi</span>
+        <span class="pill">Mart &amp; Merchandise Resmi</span>
         <h3 style="font-size:22px; margin:8px 0 6px;">Belanja Produk &amp; Merchandise UIN Maliki</h3>
         <p style="margin:0;">Koleksi atribut, cendera mata, dan produk resmi kampus untuk civitas akademika, alumni, tamu, dan masyarakat umum.</p>
       </div>
@@ -916,7 +913,7 @@ function newsView() {
       <div id="newsGrid" class="grid three">
         ${publicNewsList.length ? publicNewsList.map(x => `
           <article class="card">
-            <span class="pill">📢 Publikasi P2B</span>
+            <span class="pill">Publikasi P2B</span>
             <p class="smallnote" style="margin-top:12px;">${esc(x.date || '')}</p>
             <h3>${esc(x.title || 'Informasi')}</h3>
             <p>${esc(x.summary || '')}</p>
@@ -924,7 +921,7 @@ function newsView() {
           </article>
         `).join('') : `
           <div class="card" style="grid-column:1/-1; text-align:center; padding:48px 24px;">
-            <div style="font-size:40px; margin-bottom:12px;">📰</div>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="margin:0 auto 12px; display:block; color:var(--muted);"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path><path d="M18 14h-8"></path><path d="M15 18h-5"></path><path d="M10 6h8v4h-8V6Z"></path></svg>
             <h3 style="margin-top:0;">Belum Ada Berita Diterbitkan</h3>
             <p>Pengumuman resmi dan liputan kegiatan P2B akan ditampilkan di sini setelah dipublikasikan melalui Dashboard.</p>
             <a class="arrowlink" target="_blank" rel="noopener" href="https://uin-malang.ac.id/">Kunjungi Berita Universitas ↗</a>
@@ -946,7 +943,9 @@ function cooperationView() {
       <div class="grid two">
         <div class="card" style="display:flex; flex-direction:column; justify-content:space-between;">
           <div>
-            <div class="glyph">🤝</div>
+            <div class="glyph">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m11 17 2 2a1 1 0 0 0 1.4 0l4.6-4.6a2 2 0 0 0 0-2.8l-3.4-3.4a2 2 0 0 0-2.8 0L9 12"></path><path d="m3 7 3-3a2 2 0 0 1 2.8 0l3.4 3.4a2 2 0 0 1 0 2.8L8 14.4"></path><path d="m6 10-3 3a2 2 0 0 0 0 2.8l3.4 3.4a2 2 0 0 0 2.8 0l2.8-2.8"></path></svg>
+            </div>
             <h3 style="font-size:20px;">Pengembangan Kemitraan &amp; Kolaborasi</h3>
             <p>P2B membuka pintu kemitraan seluas-luasnya dengan BUMN, korporasi swasta, perbankan nasional, lembaga keagamaan, dan UMKM untuk pemanfaatan aset bersama, hilirisasi produk inovasi, dan peningkatan layanan kampus.</p>
           </div>
@@ -955,7 +954,9 @@ function cooperationView() {
 
         <div class="card" style="display:flex; flex-direction:column; justify-content:space-between; border-left:4px solid var(--gold);">
           <div>
-            <div class="glyph">📜</div>
+            <div class="glyph">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+            </div>
             <h3 style="font-size:20px;">Aplikasi Kendali PKS &amp; Tagihan</h3>
             <p>Modul kendali digital untuk memantau siklus dokumen PKS, batas waktu kontrak mitra, jadwal tagihan termin, rekonsiliasi piutang, dan penugasan PIC operasional.</p>
           </div>
@@ -1116,7 +1117,7 @@ function updateAccessBtn() {
   const btn = $('accessBtn');
   if (!btn) return;
   if (!user) {
-    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> <span>◈ Dashboard Kepala P2B</span>`;
+    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> <span>Dashboard Kepala P2B</span>`;
     btn.onclick = () => {
       $('authOverlay').hidden = false;
     };
