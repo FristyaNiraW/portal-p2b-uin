@@ -16,6 +16,7 @@ const MIME = {
   '.js': 'application/javascript; charset=utf-8',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon',
   '.json': 'application/json; charset=utf-8'
@@ -25,7 +26,7 @@ const server = http.createServer((req, res) => {
   // CORS & No-cache
   res.setHeader('Access-Control-Allow-Origin', '*');
 
-  let urlPath = req.url.split('?')[0];
+  let urlPath = decodeURIComponent(req.url.split('?')[0]);
 
   // Mock API fallback saat dijalankan dalam mode preview lokal tanpa backend Python
   if (urlPath === '/api/public') {

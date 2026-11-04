@@ -56,10 +56,45 @@
         <span class="menu-label">Menu</span>
       </button>
 
-           <nav class="mainnav" id="publicNav">
+      <nav class="mainnav" id="publicNav">
         <button class="navbtn active" data-go="beranda">Beranda</button>
         <button class="navbtn" data-go="divisi">Divisi</button>
-        <button class="navbtn" data-go="marketplace">Marketplace</button>
+        <div class="nav-dropdown">
+          <button class="navbtn navbtn-dropdown" data-go="marketplace" aria-haspopup="true">
+            <span>Marketplace</span>
+            <svg class="dropdown-caret" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="dropdown-menu" role="menu" aria-label="Submenu Marketplace">
+            <button class="dropdown-item" data-tab-nav="marketplace|belanja" role="menuitem">
+              <span class="dropdown-icon">🛍️</span>
+              <span class="dropdown-text">
+                <strong>Belanja</strong>
+                <small>Mart &amp; Merchandise Resmi Kampus</small>
+              </span>
+            </button>
+            <button class="dropdown-item" data-tab-nav="marketplace|rumah_singgah" role="menuitem">
+              <span class="dropdown-icon">🏨</span>
+              <span class="dropdown-text">
+                <strong>Pesan Rumah Singgah</strong>
+                <small>Reservasi Kamar Tamu &amp; Penginapan</small>
+              </span>
+            </button>
+            <button class="dropdown-item" data-tab-nav="marketplace|sewa_ruang" role="menuitem">
+              <span class="dropdown-icon">🏢</span>
+              <span class="dropdown-text">
+                <strong>Sewa Ruang</strong>
+                <small>Hall Pertemuan, Ruang Rapat &amp; Kelas</small>
+              </span>
+            </button>
+            <button class="dropdown-item" data-tab-nav="marketplace|sewa_gedung" role="menuitem">
+              <span class="dropdown-icon">🏛️</span>
+              <span class="dropdown-text">
+                <strong>Sewa Gedung &amp; Lahan</strong>
+                <small>Gedung Serbaguna, Aula &amp; Area Terbuka</small>
+              </span>
+            </button>
+          </div>
+        </div>
         <button class="navbtn" data-go="berita">Info &amp; Berita</button>
         <button class="navbtn" data-go="kerjasama">Kerja Sama</button>
         <button class="navbtn" data-go="kontak">Kontak</button>

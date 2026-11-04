@@ -10,6 +10,7 @@ let user = null;
 let current = 'beranda';
 let sub = 'profil';
 let mod = 'komersial';
+let marketTab = 'belanja';
 let internalPage = 'dashboard';
 let rows = [];
 let dash = {};
@@ -298,6 +299,7 @@ function nav(to, tab) {
   current = to;
   if (to === 'beranda' && tab) sub = tab;
   if (to === 'divisi' && tab) mod = tab;
+  if (to === 'marketplace' && tab) marketTab = tab;
   location.hash = to + (tab ? '/' + tab : '');
   if (to !== 'dashboard') {
     if ($('publicSite')) $('publicSite').hidden = false;
@@ -322,6 +324,17 @@ function bindNav() {
   });
   document.querySelectorAll('.navbtn').forEach(b => {
     b.classList.toggle('active', b.dataset.go === current);
+  });
+  document.querySelectorAll('.dropdown-item[data-tab-nav]').forEach(b => {
+    const [to, tab] = b.dataset.tabNav.split('|');
+    b.classList.toggle('active', current === to && marketTab === tab);
+    b.onclick = e => {
+      e.preventDefault();
+      if (document.activeElement && typeof document.activeElement.blur === 'function') {
+        document.activeElement.blur();
+      }
+      nav(to, tab);
+    };
   });
   if ($('publicNav')) $('publicNav').classList.remove('open');
 }
@@ -572,15 +585,43 @@ function divisionView() {
 }
 
 const merchandiseWa = '6281217122934'; // CP Komersial
+const rumahSinggahWa = '6281288335532'; // CP Rumah Singgah
 
 // Format: [nama, harga, deskripsi singkat, nama file foto (kosongkan '' kalau belum ada)]
 const merchandiseList = [
-  ['Kaos UIN Maliki', 95000, 'Kaos katun dengan sablon logo UIN Maliki Malang, tersedia berbagai warna.', 'kaos.jpeg'],
-  ['Mug Maliki Islamic University', 35000, 'Mug keramik dengan desain Maliki Islamic University dan The Ulul Albab Journey.', 'mug.jpeg'],
-  ['Lanyard Ulul Albab', 15000, 'Lanyard dengan motif khas UIN Maliki, tersedia warna hijau, putih, dan biru.', 'lanyard.jpeg'],
-  ['Songkok Exclusive', 75000, 'Songkok hitam eksklusif dengan logo Maliki Islamic University.', 'songkok.jpeg'],
-  ['Tote Bag UIN Maliki', 45000, 'Tote bag dengan logo UIN Maliki Malang, tersedia bahan kanvas, spunbond, dan denim.', 'tote bag.jpeg'],
-  ['Korek UIN Maliki', 10000, 'Korek api dengan logo UIN Maliki Malang.', 'korek.jpeg']
+  ['Kaos UIN Maliki', 95000, 'Kaos katun dengan sablon logo UIN Maliki Malang, tersedia berbagai warna.', 'Kaos.jpeg'],
+  ['Mug Maliki Islamic University', 35000, 'Mug keramik dengan desain Maliki Islamic University dan The Ulul Albab Journey.', 'Mug.jpeg'],
+  ['Lanyard Ulul Albab', 15000, 'Lanyard dengan motif khas UIN Maliki, tersedia warna hijau, putih, dan biru.', 'Lanyard.jpeg'],
+  ['Songkok Exclusive', 75000, 'Songkok hitam eksklusif dengan logo Maliki Islamic University.', 'Songkok.jpeg'],
+  ['Tote Bag UIN Maliki', 45000, 'Tote bag dengan logo UIN Maliki Malang, tersedia bahan kanvas, spunbond, dan denim.', 'Tote bag.jpeg'],
+  ['Korek UIN Maliki', 10000, 'Korek api dengan logo UIN Maliki Malang.', 'Korek.jpeg']
+];
+
+const marketplaceTabs = [
+  ['belanja', '🛍️ Belanja', 'Mart & Merchandise Resmi Kampus'],
+  ['rumah_singgah', '🏨 Pesan Rumah Singgah', 'Reservasi Kamar Tamu & Penginapan'],
+  ['sewa_ruang', '🏢 Sewa Ruang', 'Hall Pertemuan, Ruang Rapat & Kelas'],
+  ['sewa_gedung', '🏛️ Sewa Gedung & Lahan', 'Gedung Serbaguna, Aula & Area Terbuka']
+];
+
+const rumahSinggahList = [
+  ['Kamar Tamu Reguler (K01 – K08)', 250000, 'per malam', 'Kamar nyaman untuk tamu akademik, wali mahasiswa, dan umum. Tersedia 8 unit kamar terstandarisasi.', ['AC & TV LED', 'Kamar Mandi Dalam (Water Heater)', 'Wi-Fi Kampus Cepat', '2 Tempat Tidur / Twin Bed', 'Air Mineral & Perlengkapan Mandi'], '🏨'],
+  ['Kamar Tamu VIP / Family (K09 – K12)', 350000, 'per malam', 'Kamar lebih luas dengan fasilitas ekstra untuk tamu kehormatan, narasumber, atau keluarga civitas.', ['AC, Smart TV & Meja Kerja', 'Kamar Mandi Dalam + Water Heater', 'Double / King Bed Nyaman', 'Area Duduk & Sofa Tamu', 'Layanan Kebersihan Harian'], '🛌'],
+  ['Paket Menginap Rombongan / Kegiatan', 225000, 'per kamar / malam (min. 5 kamar)', 'Harga khusus untuk rombongan studi banding, peserta konferensi, atau kegiatan resmi fakultas/lembaga.', ['Akses Parkir Bus & Kendaraan Luas', 'Dekat Masjid & Kantin Kampus', 'Opsi Tambahan Konsumsi / Catering', 'Check-in Fleksibel Sesuai Jadwal'], '👥']
+];
+
+const sewaRuangList = [
+  ['Hall Besar Lt. 4 (Kode: HB4)', 1500000, 'per sesi / hari', 'Ruang pertemuan representatif berkapasitas besar untuk seminar, workshop, rapat kerja, dan pelatihan.', 'Kapasitas ±150–200 Orang', ['Full AC Sentral', 'Sound System & Wireless Mic', 'Proyektor LCD / Layar Lebar', 'Kursi & Meja Konferensi', 'Akses Lift & Lobby'], '🏢'],
+  ['Hall Kecil A Lt. 3 (Kode: HK3A)', 750000, 'per sesi / hari', 'Ruang rapat menengah yang ideal untuk diskusi panel, FGD, ujian terbuka, atau bimbingan teknis.', 'Kapasitas ±50–75 Orang', ['AC & Tata Suara Standar', 'Smart TV / Proyektor', 'Papan Tulis / Flipchart', 'Wi-Fi Dedicated', 'Meja & Kursi Modular'], '📋'],
+  ['Hall Kecil B Lt. 3 (Kode: HK3B)', 750000, 'per sesi / hari', 'Ruang pertemuan nyaman untuk rapat koordinasi mitra, pelatihan singkat, dan kegiatan organisasi.', 'Kapasitas ±50–75 Orang', ['AC & Sound System', 'Proyektor & Layar', 'Konfigurasi Kursi Fleksibel', 'Koneksi Internet Cepat', 'Area Transit Tamu'], '💼'],
+  ['Ruang Kelas & Pelatihan Profesi', 450000, 'per sesi / hari', 'Ruang kelas berstandar akademik untuk kursus bahasa, sertifikasi kompetensi BNSP, dan bimbel.', 'Kapasitas ±30–40 Orang', ['AC & Pencahayaan Optimal', 'LCD Proyektor & Whiteboard', 'Kursi Kuliah / Meja Lipat', 'Lingkungan Kondusif'], '🎓']
+];
+
+const sewaGedungList = [
+  ['Gedung Serbaguna / Auditorium Kampus', 7500000, 'per hari', 'Gedung berkapasitas besar untuk acara wisuda, konferensi internasional, simposium, dan resepsi.', 'Kapasitas ±800–1.500 Orang', ['Panggung Utama & Backstage', 'Tata Suara & Lighting Profesional', 'Ruang VIP Transit', 'Area Parkir Luas & Keamanan', 'Dukungan Kebersihan & Teknisi'], '🏛️'],
+  ['Aula Sport Center & Gelanggang', 4500000, 'per hari', 'Fasilitas indoor serbaguna untuk turnamen olahraga, expo pendidikan, bursa kerja (job fair), dan gathering.', 'Kapasitas ±500–1.000 Orang', ['Tribun Penonton', 'Lapangan Indoor Standar', 'Ruang Ganti & Toilet Lengkap', 'Akses Loading Barang Mudah'], '🏟️'],
+  ['Lahan Terbuka & Area Bazar / Event', 1500000, 'per hari / zona', 'Area terbuka strategis di lingkungan kampus untuk pameran UMKM, bazar mahasiswa, dan festival.', 'Zona Strategis Kampus', ['Akses Listrik & Air', 'Titik Strategis Lalu Lintas Civitas', 'Izin Keramaian Internal Kampus', 'Opsi Sewa Tenda & Booth'], '⛺'],
+  ['Kios Komersial & Space Tenant Kampus', 12000000, 'per tahun / kontrak PKS', 'Penyewaan ruang usaha, gerai kantin, layanan perbankan/ATM, dan kemitraan ritel di Kampus 1, 2, & 3.', 'Mitra Usaha & UMKM', ['Kontrak Resmi PKS BLU', 'Pasar Aktif Ribuan Mahasiswa', 'Ekosistem Transaksi Cashless QRIS', 'Fasilitas Listrik & Keamanan 24 Jam'], '🏪']
 ];
 
 function commercialView() {
@@ -624,62 +665,216 @@ function commercialView() {
 }
 
 function marketplaceView() {
+  if (!marketplaceTabs.some(x => x[0] === marketTab)) marketTab = 'belanja';
   return `
     <main class="page container">
-      ${head('Mart & Merchandise', 'Marketplace P2B UIN Malang', 'Produk resmi kampus untuk civitas akademika dan masyarakat. Pemesanan melalui WhatsApp CP Komersial.')}
+      ${head('Ekosistem Komersial & Aset', 'Marketplace P2B UIN Malang', 'Pusat pemesanan merchandise resmi, reservasi rumah singgah, penyewaan ruang pertemuan, serta sewa gedung dan lahan kampus.')}
 
-      <div class="merch-grid">
-        ${merchandiseList.map(([name, price, desc, img]) => `
-          <div class="card merch-card">
-            ${img
-              ? `<img class="merch-img" src="/static/merch/${esc(img)}" alt="${esc(name)}">`
-              : `<div class="merch-img merch-noimg">Foto produk</div>`}
-            <h4>${esc(name)}</h4>
-            <p>${esc(desc)}</p>
-            <div class="merch-price">${rup(price)}</div>
-            <a class="cp-wa" target="_blank" rel="noopener noreferrer"
-               href="https://wa.me/${merchandiseWa}?text=${encodeURIComponent('Halo admin P2B, saya ingin memesan ' + name)}">Pesan via WhatsApp</a>
-          </div>
+      <!-- Sub-menu Marketplace -->
+      <div class="quicknav market-tabs">
+        ${marketplaceTabs.map(([k, label]) => `
+          <button class="chip ${marketTab === k ? 'active' : ''}" data-market-tab="${k}">${esc(label)}</button>
         `).join('')}
       </div>
 
-      <!-- Panduan Cara Pemesanan -->
-      <div class="card" style="margin-top:20px; background:var(--mint); border-color:var(--green);">
-        <strong style="color:var(--green-dark); display:block; margin-bottom:8px;">Cara Pemesanan</strong>
-        <ol class="bullets">
-          <li>Pilih produk, lalu klik tombol <strong>Pesan via WhatsApp</strong>.</li>
-          <li>Konfirmasi ketersediaan stok, ukuran, dan jumlah pesanan dengan admin.</li>
-          <li>Lakukan pembayaran sesuai arahan admin.</li>
-          <li>Ambil pesanan di Kantor P2B (Kampus 1, Gedung Rektorat) atau sesuai kesepakatan.</li>
-        </ol>
-        <small style="color:var(--muted);">Harga dan ketersediaan produk dapat berubah sewaktu-waktu.</small>
+      <div id="marketContent">
+        ${marketplaceTabContent()}
       </div>
     </main>
   `;
 }
 
-function otherDivisionView(k) {
-  let list = offerings[k] || [];
-  let divPerson = people.find(p => p[0].toLowerCase().includes(k)) || ['Koordinator', 'Pengelola Divisi P2B'];
+function marketplaceTabContent() {
+  if (marketTab === 'rumah_singgah') {
+    return `
+      <div class="card market-banner">
+        <div>
+          <span class="pill">🏨 Penginapan Resmi Kampus • 12 Kamar Tamu</span>
+          <h3 style="font-size:22px; margin:8px 0 6px;">Pesan Rumah Singgah P2B UIN Malang</h3>
+          <p style="margin:0;">Layanan penginapan bersih, nyaman, dan islami di lingkungan kampus bagi tamu universitas, wali mahasiswa, peserta kegiatan, dan masyarakat umum.</p>
+        </div>
+        <div class="market-banner-actions">
+          <a class="cp-wa" target="_blank" rel="noopener noreferrer"
+             href="https://wa.me/${rumahSinggahWa}?text=${encodeURIComponent('Halo Admin Rumah Singgah P2B UIN Malang, saya ingin menanyakan ketersediaan kamar.')}">Chat CP Rumah Singgah</a>
+          <button class="ghost" data-open-module="rumah_reservasi">Kalender Okupansi (Staf)</button>
+        </div>
+      </div>
+
+      <div class="grid three">
+        ${rumahSinggahList.map(([name, price, unit, desc,perks, icon]) => `
+          <div class="card rental-card">
+            <div class="rental-head">
+              <span class="glyph">${icon}</span>
+              <span class="pill">Tersedia Reservasi</span>
+            </div>
+            <h3>${esc(name)}</h3>
+            <p>${esc(desc)}</p>
+            <ul class="rental-perks">
+              ${perks.map(p => `<li>✓ ${esc(p)}</li>`).join('')}
+            </ul>
+            <div class="rental-foot">
+              <div>
+                <small style="color:var(--muted); display:block;">Mulai dari</small>
+                <div class="merch-price">${rup(price)} <span style="font-size:12px; font-weight:600; color:var(--muted);">${esc(unit)}</span></div>
+              </div>
+              <a class="cp-wa" target="_blank" rel="noopener noreferrer"
+                 href="https://wa.me/${rumahSinggahWa}?text=${encodeURIComponent('Halo Admin Rumah Singgah P2B, saya ingin memesan ' + name + ' untuk tanggal ...')}">Pesan Kamar</a>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="card" style="margin-top:20px; background:var(--mint); border-color:var(--green);">
+        <strong style="color:var(--green-dark); display:block; margin-bottom:8px;">Ketentuan &amp; Cara Reservasi Rumah Singgah</strong>
+        <ol class="bullets">
+          <li>Pilih tipe kamar dan klik tombol <strong>Pesan Kamar</strong> untuk terhubung ke WhatsApp CP Rumah Singgah (<strong>+62 812-8833-5532</strong>).</li>
+          <li>Informasikan tanggal <em>Check-in</em>, <em>Check-out</em>, jumlah tamu, dan identitas pemesan.</li>
+          <li>Konfirmasi ketersediaan kamar dan lakukan pembayaran uang muka (DP) atau pelunasan sesuai petunjuk admin.</li>
+          <li>Waktu <em>Check-in</em> mulai pukul 14.00 WIB dan <em>Check-out</em> maksimal pukul 12.00 WIB.</li>
+        </ol>
+      </div>
+    `;
+  }
+
+  if (marketTab === 'sewa_ruang') {
+    return `
+      <div class="card market-banner">
+        <div>
+          <span class="pill">🏢 Fasilitas Ruang Pertemuan &amp; Kelas</span>
+          <h3 style="font-size:22px; margin:8px 0 6px;">Sewa Ruang Pertemuan, Hall &amp; Kelas</h3>
+          <p style="margin:0;">Solusi ruang rapat, hall seminar, ruang pelatihan, dan ujian dengan fasilitas penunjang lengkap di lingkungan UIN Maulana Malik Ibrahim Malang.</p>
+        </div>
+        <div class="market-banner-actions">
+          <a class="cp-wa" target="_blank" rel="noopener noreferrer"
+             href="https://wa.me/${merchandiseWa}?text=${encodeURIComponent('Halo Admin Komersial P2B, saya ingin menanyakan ketersediaan sewa ruang pertemuan.')}">Hubungi CP Komersial</a>
+          <button class="ghost" data-open-module="persewaan">Modul Persewaan (Staf)</button>
+        </div>
+      </div>
+
+      <div class="grid two">
+        ${sewaRuangList.map(([name, price, unit, desc, cap, perks, icon]) => `
+          <div class="card rental-card">
+            <div class="rental-head">
+              <span class="glyph">${icon}</span>
+              <span class="pill">${esc(cap)}</span>
+            </div>
+            <h3>${esc(name)}</h3>
+            <p>${esc(desc)}</p>
+            <ul class="rental-perks">
+              ${perks.map(p => `<li>✓ ${esc(p)}</li>`).join('')}
+            </ul>
+            <div class="rental-foot">
+              <div>
+                <small style="color:var(--muted); display:block;">Estimasi Tarif BLU</small>
+                <div class="merch-price">${rup(price)} <span style="font-size:12px; font-weight:600; color:var(--muted);">${esc(unit)}</span></div>
+              </div>
+              <a class="cp-wa" target="_blank" rel="noopener noreferrer"
+                 href="https://wa.me/${merchandiseWa}?text=${encodeURIComponent('Halo Admin P2B, saya ingin menyewa ruang ' + name + ' untuk kegiatan pada tanggal ...')}">Sewa Ruang</a>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="card" style="margin-top:20px; background:var(--mint); border-color:var(--green);">
+        <strong style="color:var(--green-dark); display:block; margin-bottom:8px;">Prosedur Penyewaan Ruang</strong>
+        <ol class="bullets">
+          <li>Pilih ruangan yang sesuai dengan kapasitas acara Anda, lalu klik <strong>Sewa Ruang</strong>.</li>
+          <li>Konsultasikan jadwal ketersediaan tanggal, durasi penggunaan, serta kebutuhan tambahan (konsumsi/catering P2B) dengan CP Komersial.</li>
+          <li>Ajukan surat permohonan atau formulir pemesanan dan selesaikan administrasi pembayaran sesuai tarif resmi BLU.</li>
+        </ol>
+      </div>
+    `;
+  }
+
+  if (marketTab === 'sewa_gedung') {
+    return `
+      <div class="card market-banner">
+        <div>
+          <span class="pill">🏛️ Optimalisasi Aset Gedung &amp; Lahan BLU</span>
+          <h3 style="font-size:22px; margin:8px 0 6px;">Sewa Gedung Serbaguna, Aula &amp; Lahan Kampus</h3>
+          <p style="margin:0;">Penyewaan fasilitas gedung kapasitas besar, gelanggang olahraga, area pameran/bazar terbuka, hingga ruang usaha tenant dan kemitraan komersial.</p>
+        </div>
+        <div class="market-banner-actions">
+          <a class="cp-wa" target="_blank" rel="noopener noreferrer"
+             href="https://wa.me/${merchandiseWa}?text=${encodeURIComponent('Halo Admin Komersial P2B, saya ingin berkonsultasi mengenai penyewaan gedung/lahan kampus.')}">Konsultasi Sewa Aset</a>
+          <button class="ghost" data-open-module="persewaan">Modul Persewaan (Staf)</button>
+        </div>
+      </div>
+
+      <div class="grid two">
+        ${sewaGedungList.map(([name, price, unit, desc, cap, perks, icon]) => `
+          <div class="card rental-card">
+            <div class="rental-head">
+              <span class="glyph">${icon}</span>
+              <span class="pill">${esc(cap)}</span>
+            </div>
+            <h3>${esc(name)}</h3>
+            <p>${esc(desc)}</p>
+            <ul class="rental-perks">
+              ${perks.map(p => `<li>✓ ${esc(p)}</li>`).join('')}
+            </ul>
+            <div class="rental-foot">
+              <div>
+                <small style="color:var(--muted); display:block;">Estimasi Tarif BLU</small>
+                <div class="merch-price">${rup(price)} <span style="font-size:12px; font-weight:600; color:var(--muted);">${esc(unit)}</span></div>
+              </div>
+              <a class="cp-wa" target="_blank" rel="noopener noreferrer"
+                 href="https://wa.me/${merchandiseWa}?text=${encodeURIComponent('Halo Admin P2B, saya ingin mengajukan sewa ' + name + ' untuk tanggal/periode ...')}">Ajukan Sewa</a>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="card" style="margin-top:20px; background:var(--mint); border-color:var(--green);">
+        <strong style="color:var(--green-dark); display:block; margin-bottom:8px;">Ketentuan Sewa Gedung &amp; Lahan Kampus</strong>
+        <ol class="bullets">
+          <li>Klik tombol <strong>Ajukan Sewa</strong> pada fasilitas gedung atau lahan yang diinginkan untuk menghubungi CP Komersial P2B.</li>
+          <li>Untuk penggunaan gedung skala besar atau sewa lahan/tenant jangka panjang, dapat dilanjutkan dengan penerbitan Perjanjian Kerja Sama (PKS).</li>
+          <li>Seluruh kegiatan wajib mematuhi tata tertib, norma ketertiban, dan ketentuan Badan Layanan Umum (BLU) UIN Maulana Malik Ibrahim Malang.</li>
+        </ol>
+      </div>
+    `;
+  }
+
+  // Default: belanja (Mart & Merchandise)
   return `
-    <div class="grid two">
-      ${list.map((x, i) => `
-        <div class="card">
-          <span class="pill">Layanan Unggulan ${i + 1}</span>
-          <h3 style="margin-top:12px;">${esc(x)}</h3>
-          <p>Layanan terstandarisasi untuk mendukung kebutuhan civitas akademika, instansi mitra, maupun masyarakat luas.</p>
+    <div class="card market-banner">
+      <div>
+        <span class="pill">🛍️ Mart &amp; Merchandise Resmi</span>
+        <h3 style="font-size:22px; margin:8px 0 6px;">Belanja Produk &amp; Merchandise UIN Maliki</h3>
+        <p style="margin:0;">Koleksi atribut, cendera mata, dan produk resmi kampus untuk civitas akademika, alumni, tamu, dan masyarakat umum.</p>
+      </div>
+      <div class="market-banner-actions">
+        <a class="cp-wa" target="_blank" rel="noopener noreferrer"
+           href="https://wa.me/${merchandiseWa}?text=${encodeURIComponent('Halo admin P2B, saya ingin bertanya tentang katalog merchandise UIN Maliki.')}">Hubungi CP Mart &amp; Merch</a>
+      </div>
+    </div>
+
+    <div class="merch-grid">
+      ${merchandiseList.map(([name, price, desc, img]) => `
+        <div class="card merch-card">
+          ${img
+            ? `<img class="merch-img" src="/static/merch/${esc(img)}" alt="${esc(name)}">`
+            : `<div class="merch-img merch-noimg">Foto produk</div>`}
+          <h4>${esc(name)}</h4>
+          <p>${esc(desc)}</p>
+          <div class="merch-price">${rup(price)}</div>
+          <a class="cp-wa" target="_blank" rel="noopener noreferrer"
+             href="https://wa.me/${merchandiseWa}?text=${encodeURIComponent('Halo admin P2B, saya ingin memesan ' + name)}">Pesan via WhatsApp</a>
         </div>
       `).join('')}
     </div>
 
-    <div class="card" style="margin-top:24px; background:var(--mint); border-color:var(--green);">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;">
-        <div>
-          <strong style="color:var(--green-dark); font-size:15px; display:block;">Koordinator Bidang: ${esc(divPerson[1])}</strong>
-          <small style="color:var(--muted);">Untuk pengajuan kerja sama atau informasi operasional divisi ini, silakan hubungi kontak sekretariat P2B.</small>
-        </div>
-        <button class="btn" data-tab-nav="kontak|">Hubungi Layanan &rarr;</button>
-      </div>
+    <!-- Panduan Cara Pemesanan -->
+    <div class="card" style="margin-top:20px; background:var(--mint); border-color:var(--green);">
+      <strong style="color:var(--green-dark); display:block; margin-bottom:8px;">Cara Pemesanan Merchandise</strong>
+      <ol class="bullets">
+        <li>Pilih produk, lalu klik tombol <strong>Pesan via WhatsApp</strong>.</li>
+        <li>Konfirmasi ketersediaan stok, ukuran, dan jumlah pesanan dengan admin.</li>
+        <li>Lakukan pembayaran sesuai arahan admin.</li>
+        <li>Ambil pesanan di Kantor P2B (Kampus 1, Gedung Rektorat) atau sesuai kesepakatan.</li>
+      </ol>
+      <small style="color:var(--muted);">Harga dan ketersediaan produk dapat berubah sewaktu-waktu.</small>
     </div>
   `;
 }
@@ -864,11 +1059,23 @@ function attachViewListeners() {
     };
   });
 
+  // Marketplace tab chips
+  document.querySelectorAll('[data-market-tab]').forEach(b => {
+    b.onclick = () => {
+      marketTab = b.dataset.marketTab;
+      location.hash = 'marketplace/' + marketTab;
+      draw();
+    };
+  });
+
   // Links via data-tab-nav
   document.querySelectorAll('[data-tab-nav]').forEach(b => {
     b.onclick = e => {
       e.preventDefault();
       const [to, tab] = b.dataset.tabNav.split('|');
+      if (document.activeElement && typeof document.activeElement.blur === 'function') {
+        document.activeElement.blur();
+      }
       nav(to, tab);
     };
   });
@@ -1577,10 +1784,11 @@ async function fetchNews() {
 
 window.addEventListener('hashchange', () => {
   const [to, tab] = decodeURIComponent(location.hash.slice(1)).split('/');
-  if (['beranda', 'divisi','marketplace', 'berita', 'kerjasama', 'kontak', 'dashboard'].includes(to)) {
+  if (['beranda', 'divisi', 'marketplace', 'berita', 'kerjasama', 'kontak', 'dashboard'].includes(to)) {
     current = to;
     if (to === 'beranda' && tab) sub = tab;
     if (to === 'divisi' && tab) mod = tab;
+    if (to === 'marketplace' && tab) marketTab = tab;
     draw();
   }
 });
@@ -1591,6 +1799,7 @@ if (['beranda', 'divisi', 'marketplace', 'berita', 'kerjasama', 'kontak', 'dashb
   current = initial;
   if (initial === 'beranda' && initialTab) sub = initialTab;
   if (initial === 'divisi' && initialTab) mod = initialTab;
+  if (initial === 'marketplace' && initialTab) marketTab = initialTab;
 }
 
 draw();

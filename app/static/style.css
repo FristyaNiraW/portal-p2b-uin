@@ -265,6 +265,137 @@ textarea:focus-visible {
   box-shadow: inset 0 -2px 0 var(--green);
 }
 
+/* Dropdown Menu pada Navbar (Marketplace) */
+.nav-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.navbtn-dropdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dropdown-caret {
+  transition: transform 0.22s ease;
+  opacity: 0.75;
+}
+
+.nav-dropdown:hover .navbtn-dropdown,
+.nav-dropdown:focus-within .navbtn-dropdown {
+  background: var(--mint);
+  color: var(--green);
+}
+
+.nav-dropdown:hover .dropdown-caret,
+.nav-dropdown:focus-within .dropdown-caret {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 268px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--green);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  box-shadow: 0 14px 34px rgba(5, 59, 49, 0.16);
+  padding: 8px;
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  z-index: 250;
+}
+
+/* Jembatan area kursor agar menu tidak tertutup saat kursor bergerak turun */
+.dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  height: 10px;
+}
+
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 9px 11px;
+  text-align: left;
+  color: var(--ink);
+  transition: all 0.18s ease;
+}
+
+.dropdown-item:hover,
+.dropdown-item.active {
+  background: var(--mint);
+  border-color: rgba(7, 91, 75, 0.18);
+  color: var(--green-dark);
+}
+
+.dropdown-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: #f0f7f4;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  transition: all 0.18s ease;
+}
+
+.dropdown-item:hover .dropdown-icon,
+.dropdown-item.active .dropdown-icon {
+  background: var(--green);
+  border-color: var(--green);
+  color: #ffffff;
+  transform: scale(1.04);
+}
+
+.dropdown-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.dropdown-text strong {
+  font-size: 13.5px;
+  font-weight: 750;
+  color: var(--green-dark);
+}
+
+.dropdown-text small {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
 .adminbtn {
   background: linear-gradient(135deg, var(--green), var(--green-dark));
   color: #ffffff;
@@ -1415,7 +1546,29 @@ input:focus, select:focus, textarea:focus {
     border-top: 1px solid var(--line);
   }
   .mainnav.open { display: flex; }
-  .navbtn { text-align: left; }
+  .navbtn { text-align: left; width: 100%; }
+  .nav-dropdown {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  .navbtn-dropdown {
+    justify-content: space-between;
+  }
+  .dropdown-menu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
+    box-shadow: none;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--green);
+    border-radius: var(--radius-sm);
+    margin: 4px 0 4px 12px;
+    background: #f8fbfa;
+  }
+  .dropdown-menu::before { display: none; }
   .adminbtn { width: 100%; justify-content: center; }
   .container { padding: 0 16px; }
   .heroinner { padding: 50px 0 60px; }
@@ -1533,3 +1686,65 @@ input:focus, select:focus, textarea:focus {
 
 @media (max-width: 1000px) { .merch-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .merch-grid { grid-template-columns: 1fr; } }
+
+/* ===== Marketplace Sub-sections (Rumah Singgah, Sewa Ruang, Gedung & Lahan) ===== */
+.market-banner {
+  background: linear-gradient(110deg, #eaf5f0 0%, #ffffff 100%);
+  border-left: 4px solid var(--green);
+  margin-bottom: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.market-banner-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.rental-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.rental-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.rental-perks {
+  list-style: none;
+  padding: 12px 14px;
+  margin: 0 0 16px;
+  background: #f6faf8;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--ink);
+  display: grid;
+  gap: 5px;
+}
+
+.rental-perks li {
+  font-weight: 600;
+  color: #35524d;
+}
+
+.rental-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  margin-top: auto;
+  flex-wrap: wrap;
+}
